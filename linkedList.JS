@@ -1,5 +1,4 @@
 // CREATE A CLASS FOR NODE
-
 class Node {
   // NODE HAS TWO PROPERTIES
   // ONE IS VALUE, OTHER IS NEXT, NEXT WILL HAVE THE NEXT NODE ASSIGNED TO IT IN LINKED LIST,
@@ -12,7 +11,6 @@ class Node {
     this.next = null;
   }
 }
-
 class LinkedList {
   //LINKED LIST HAS HEAD, TAIL PROPS.
   //CONSTRUCTOR CREATES A NEW LINKEDLIST WITH ONE VALUE
@@ -26,6 +24,7 @@ class LinkedList {
     this.tail = newNode;
     this.length = 1;
   }
+
   getDetails() {
     let temp = this.head;
     let arr = [];
@@ -37,6 +36,7 @@ class LinkedList {
       arr.push(temp.value);
       temp = temp.next;
     }
+    return arr;
   }
   append(value) {
     const newNode = new Node(value);
@@ -216,20 +216,51 @@ class LinkedList {
     }
     return slow;
   }
+  binaryToDecimal() {
+    let temp = this.head;
+    let value = 0;
+    while (temp != null) {
+      value = value * 2 + temp.value;
+      temp = temp.next;
+    }
+    return value;
+  }
+  partitionList(condition) {
+    let dummyOne = new Node(0);
+    let dummyTwo = new Node(0);
+    let prev1 = dummyOne;
+    let prev2 = dummyTwo;
+    let temp = this.head;
+    while (temp != null) {
+      if (temp.value < condition) {
+        prev1.next = temp;
+        //temp.next = null;
+        prev1 = prev1.next;
+      } else {
+        prev2.next = temp;
+        //temp.next = null;
+        prev2 = prev2.next;
+      }
+      temp = temp.next;
+    }
+
+    prev1.next = dummyTwo.next;
+    // dummyOne = dummyOne.next;
+    //dummyTwo.next = null;
+    // dummyOne.next = null;
+    prev2 = null;
+    return dummyOne.next;
+  }
 }
 
 const newLink = new LinkedList(55);
+newLink.append(2);
+newLink.append(81);
+newLink.append(31);
 newLink.append(5);
-newLink.append(4);
-newLink.append(33);
-newLink.append(0);
 newLink.append(7);
 
 newLink.append(2);
 newLink.append(3);
-// newLink.append(4);
-// newLink.append(5);
 
-// create a loop by connecting the tail to the second node
-// newLink.getTail().next = newLink.getHead().next;
-console.log(newLink.findKthNodeFromEnd(2));
+console.log(newLink.partitionList());
